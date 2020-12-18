@@ -9,7 +9,17 @@
     <authors>WPI, PeterJohnson, Et Al.</authors>
     <owners>DarthJake</owners>
     <summary>WPILib</summary>
-    <description>The WPILib software required by FIRST Robotics for the FRC competition.</description>
+    <description>The WPILib software required by FIRST Robotics for the FRC competition.
+
+## Package Parameters
+
+- `/ProgrammingLanguage:Language` - Selects the language specific software to install. Default is 'both'. ('java'/'cpp'/'both')
+- `/CachedZip:Zip` - Selects whether to use a cached zip with the installer or to download it. Default is 'false'. ('true'/'false'/path_to_zip)
+>*NOTE: If 'true', it will be assumed the zip is next to the installer with the default name.*
+- `/AllowUserInteraction:boolean` - Let the user intereact with the installer before execution. Default is 'false'. ('true'/'false')
+>*NOTE: This is really only for debugging or for custom control over install options.*
+
+</description>
     <projectUrl>https://github.com/wpilibsuite/allwpilib/releases</projectUrl>
     <tags>wpilib frc first robotics admin</tags>
     <copyright>Copyright (c) 2009-2019 FIRST.</copyright>
