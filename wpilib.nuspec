@@ -19,6 +19,8 @@
 - `/AllowUserInteraction:boolean` - Let the user intereact with the installer before execution. Default is 'false'. ('true'/'false')
 >*NOTE: This is really only for debugging or for custom control over install options.*
 
+To pass parameters, use `--params "''"` (e.g. `choco install packageID [other options] --params="'/ITEM:value /ITEM2:value2 /FLAG_BOOLEAN'"`).
+To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.
 </description>
     <projectUrl>https://github.com/wpilibsuite/allwpilib/releases</projectUrl>
     <tags>wpilib frc first robotics admin</tags>
