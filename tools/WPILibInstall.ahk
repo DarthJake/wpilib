@@ -23,7 +23,7 @@ if(A_Args[1] != "" and A_Args[1] = "cpp" or A_Args[1] = "java" or A_Args[1] = "b
 if(A_Args[2] = "true") {
     usePreDownloadedZip := "cached"
 }
-if(A_Args[2] != "true" and A_Args[2] != "false") {
+if(A_Args[2] != "" and A_Args[2] != "true" and A_Args[2] != "false") {
     usePreDownloadedZip := "cached"
     VSCodeZipName := A_Args[2]
 }
