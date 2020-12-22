@@ -34,10 +34,6 @@ if(A_Args[3] = "true") {
 }
 
 ;;;;; Window Search Settings ;;;;;
-; Title and Text for the "All Users/Current User" selection page
-winUserSelectionTitle := "AdminChecker"
-winUserSelectionText := "All Users"
-
 ; Tite and Text for the first main install window
 winMainInstallWindowTitle := "WPILib Installer"
 winMainInstallWindowText := "Use Checkbox to force reinstall"
