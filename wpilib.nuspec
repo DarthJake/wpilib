@@ -4,7 +4,7 @@
   <metadata>
     <id>wpilib</id>
     <title>WPILib</title>
-    <version>2020.3.2</version>
+    <version>2021.1.1-beta4</version>
     <packageSourceUrl>https://github.com/DarthJake/wpilib</packageSourceUrl>
     <authors>WPI, PeterJohnson, Et Al.</authors>
     <owners>DarthJake</owners>
@@ -19,10 +19,12 @@
 - `/AllowUserInteraction:boolean` - Let the user intereact with the installer before execution. Default is 'false'. ('true'/'false')
 >*NOTE: This is really only for debugging or for custom control over install options.*
 
+To pass parameters, use `--params "''"` (e.g. `choco install packageID [other options] --params="'/ITEM:value /ITEM2:value2 /FLAG_BOOLEAN'"`).
+To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.
 </description>
     <projectUrl>https://github.com/wpilibsuite/allwpilib/releases</projectUrl>
     <tags>wpilib frc first robotics admin</tags>
-    <copyright>Copyright (c) 2009-2019 FIRST.</copyright>
+    <copyright>Copyright (c) 2009-2021 FIRST.</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.jsdelivr.net/gh/DarthJake/wpilib@master/logo.png</iconUrl>
     <dependencies>
