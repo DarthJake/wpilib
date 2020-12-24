@@ -55,7 +55,7 @@ winFinishedText := "Finished! Use Desktop Icon to Open VS Code"
 ; MsgBox % "Select/Download"
 WinWait, %winMainInstallWindowTitle%, %winMainInstallWindowText%
 WinActivate, %winMainInstallWindowTitle%,,,
-Sleep, 1000 ; So apparently the window and button exist before its actually clickable but it'll still try so we have to wait.
+Sleep, 5000 ; So apparently the window and button exist before its actually clickable but it'll still try so we have to wait.
 ControlClick, Select/Download VS Code, %winMainInstallWindowTitle%,,,, NA
 
 ; Selecting the options to either download or choose existing
