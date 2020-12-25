@@ -15,16 +15,23 @@ $ahkParameters += if ($pp.ProgrammingLanguage) { "`"$($pp.ProgrammingLanguage)`"
 $ahkParameters += if ($pp.CachedZip) { " $($pp.CachedZip)" }
 $ahkParameters += if ($pp.AllowUserInteraction) { " $($pp.AllowUserInteraction)" }
 
+$url = ""
+if (Get-ProcessorBits -compare '64') {
+  $url = $url64
+  $checksum = $isoChecksum64
+} elseif (Get-ProcessorBits -compare '32') {
+  $url = $url32
+  $checksum = $isoChecksum32
+}
+
 $packageArgs = @{
   packageName    = $env:ChocolateyPackageName
-  softwareName   = 'WPILib*' 
+  softwareName   = 'WPILib*'
   fileType       = 'EXE'
-  Url            = $url32
-  Url64          = $url64
+  Url            = $url
   file           = $fileName32
   file64         = $fileName64
-  checksum       = $isoChecksum32
-  checksum64     = $isoChecksum64
+  checksum       = $checksum
   checksumType   = 'sha256'
   checksumType64 = 'sha256'
   silentArgs     = '' #none
