@@ -1,4 +1,4 @@
-#SingleInstance, Force
+﻿#SingleInstance, Force
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -86,6 +86,8 @@ if !(ErrorLevel) {
     ; MsgBox % "No AHK errors! - GO!"
     if (allowUserInteraction == "false") {
         MouseClick, Left, 438, 265, 1, 0 ; Click Install for all Users
+        Sleep, 5000
+
         ButtonPixelColor := "0xFFFFFF"
         While(ButtonPixelColor != ActualButtonColor) { ; Wait for installation to finish and for 'finish' button to appear
             PixelGetColor, ButtonPixelColor, 599, 381
