@@ -28,7 +28,8 @@ To have choco remember parameters on upgrade, be sure to set `choco feature enab
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.jsdelivr.net/gh/DarthJake/wpilib@master/logo.png</iconUrl>
     <dependencies>
-      <dependency id="autohotkey.portable" />
+      <dependency id="autohotkey.portable" version="[1.1.33.02]" />
+      <dependency id="chocolatey-isomount.extension" />
     </dependencies>
   </metadata>
   <files>
