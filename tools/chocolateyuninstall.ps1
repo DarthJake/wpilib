@@ -3,23 +3,28 @@ $ErrorActionPreference = 'Stop'; # stop on all errors
 Write-Host "Beginning uninstall process of WPILib..."
 
 # Variables that will need changed
-$year = '2020'
+$year = '2021'
 
 # Generated/Constant Variables
 $systemDriveLetter = (Get-WmiObject Win32_OperatingSystem).getPropertyValue("SystemDrive")
 $publicUserHome = $systemDriveLetter + "\Users\Public"
 $wpiFolder = "$publicUserHome\wpilib"
-$userStartMenuFolder = "$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\FRC 2020"
-$systemStartMenuFolder = "$systemDriveLetter\ProgramData\Microsoft\Windows\Start Menu\FRC 2020"
+$userStartMenuFolder = "$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs"
+$systemStartMenuFolder = "$systemDriveLetter\ProgramData\Microsoft\Windows\Start Menu\Programs"
+$startMenuLinks = @(
+  "$year WPILib Tools",
+  "$year WPILib Documentation.lnk",
+  "$year WPILib VS Code.lnk"
+)
 $possibleLinkDirectories = @(
   "$HOME\Desktop",
   "$publicUserHome\Desktop",
   "$HOME\OneDrive\Desktop"
 )
 $linkNames = @(
-  "FRC Shuffleboard.lnk",
-  "FRC SmartDashboard.lnk",
-  "FRC VS Code 2020.lnk"
+  "$year WPILib VS Code.lnk",
+  "$year WPILib Documentation.lnk",
+  "$year WPILib Tools"
 )
 
 ##### Delete WPILib folder #####
@@ -40,7 +45,7 @@ if (Test-Path -Path "$wpiFolder\$year") {
 # Delete the outside wpilib folder if it exists and is now empty
 if(Test-Path $wpiFolder){
   if ((Get-ChildItem $wpiFolder -force | Select-Object -First 1 | Measure-Object).Count -eq 0) {
-    Remove-Item $wpiFolder -ErrorAction SilentlyContinue -Force
+    Remove-Item $wpiFolder -ErrorAction SilentlyContinue -Force -Recurse
 
     if (!(Test-Path -Path $wpiFolder)) {
       Write-Host "`tRemoved the main wpilib folder at `"$wpiFolder`" because it was empty" -ForegroundColor Green
@@ -63,7 +68,7 @@ foreach ($directory in $possibleLinkDirectories) {
     # Check for link file, if its there attempt to delete it, recheck if its there.
     if (Test-Path ("{0}\{1}" -f $directory, $link)) {
       $LinksFound = $TRUE
-      Remove-Item ("{0}\{1}" -f $directory, $link) -ErrorAction SilentlyContinue -Force
+      Remove-Item ("{0}\{1}" -f $directory, $link) -ErrorAction SilentlyContinue -Force -Recurse
 
       if (!(Test-Path ("{0}\{1}" -f $directory, $link))) {
         Write-Host "`t`tFound and deleted `"$link`" in `"$directory`"" -ForegroundColor Green
@@ -83,65 +88,39 @@ if (!$LinksFound) {
 Write-Host "`nRemoving Start Menu Shortcuts..."
 $foundStartMenu = ""
 # Check for and delete start menu shortcuts in the user's start menu folder
-if (Test-Path -Path $userStartMenuFolder) {
-  Remove-Item $userStartMenuFolder -ErrorAction SilentlyContinue -Force -Recurse
-  $foundStartMenu = $TRUE
-  
-  if (!(Test-Path -Path $userStartMenuFolder)) {
-    Write-Host "`tRemoved start menu folder and shortcuts at `"$userStartMenuFolder`"" -ForegroundColor Green
+Write-Host "`tSearching `"$userStartMenuFolder`" for links to delete:"
+foreach ($item in $startMenuLinks) {
+  if (Test-Path -Path "$userStartMenuFolder\$item") {
+    Remove-Item "$userStartMenuFolder\$item" -ErrorAction SilentlyContinue -Force -Recurse
+    $foundStartMenu = $TRUE
+    
+    if (!(Test-Path -Path "$userStartMenuFolder\$item")) {
+      Write-Host "`t`tRemoved start menu item at `"$userStartMenuFolder\$item`"" -ForegroundColor Green
+    } else {
+      Write-Host "`t`tAn error occured while trying to delete the start menu item at `"$userStartMenuFolder\$item`"" -ForegroundColor Red
+    }
   } else {
-    Write-Host "`tAn error occured while trying to delete the start menu folder and shortcuts at `"$userStartMenuFolder`"" -ForegroundColor Red
+    Write-Host "`t`tLooked for `"$item`" in `"$userStartMenuFolder`" but found nothing" -ForegroundColor Yellow
   }
 }
 # Check for and delete start menu shortcuts in the system's start menu folder
-if (Test-Path -Path $systemStartMenuFolder) {
-  Remove-Item $systemStartMenuFolder -ErrorAction SilentlyContinue -Force -Recurse
-  $foundStartMenu = $TRUE
-  
-  if (!(Test-Path -Path $systemStartMenuFolder)) {
-    Write-Host "`tRemoved start menu folder and shortcuts at `"$systemStartMenuFolder`"" -ForegroundColor Green
+Write-Host "`tSearching `"$systemStartMenuFolder`" for links to delete:"
+foreach ($item in $startMenuLinks) {
+  if (Test-Path -Path "$systemStartMenuFolder\$item") {
+    Remove-Item "$systemStartMenuFolder\$item" -ErrorAction SilentlyContinue -Force -Recurse
+    $foundStartMenu = $TRUE
+    
+    if (!(Test-Path -Path "$systemStartMenuFolder\$item")) {
+      Write-Host "`t`tRemoved start menu item at `"$systemStartMenuFolder\$item`"" -ForegroundColor Green
+    } else {
+      Write-Host "`t`tAn error occured while trying to delete the start menu item at `"$systemStartMenuFolder\$item`"" -ForegroundColor Red
+    } 
   } else {
-    Write-Host "`tAn error occured while trying to delete the start menu folder and shortcuts at `"$systemStartMenuFolder`"" -ForegroundColor Red
-  } 
+    Write-Host "`t`tLooked for `"$item`" in `"$userStartMenuFolder`" but found nothing" -ForegroundColor Yellow
+  }
 }
 if (!$foundStartMenu) {
   Write-Host "`tThere is no Start Menu folder to delete. It was either already removed or the wpilib installer was run without admin privlages" -ForegroundColor Yellow
-}
-
-##### Delete the path environment variables #####
-Write-Host "`nRemoving Environment Variables..."
-$systemPath = [System.Environment]::GetEnvironmentVariable(
-    'PATH',
-    'Machine'
-)
-$userPath = [System.Environment]::GetEnvironmentVariable(
-  'PATH',
-  'User'
-)
-
-$newSystemPath = ($systemPath.Split(';') | Where-Object { $_ -ne "$wpiFolder\$year\frccode" }) -join ';'
-$newUserPath = ($userPath.Split(';') | Where-Object { $_ -ne "$wpiFolder\$year\frccode" }) -join ';'
-
-if ($newSystemPath -ne $systemPath) {
-  [System.Environment]::SetEnvironmentVariable(
-    'PATH',
-    $newSystemPath,
-    'Machine'
-  )
-  Write-Host "`tWPILib has been removed from the System Path" -ForegroundColor Green
-} else {
-  Write-Host "`tWPILib was not in the System Path and so was not removed" -ForegroundColor Yellow
-}
-
-if ($newUserPath -ne $userPath) {
-  [System.Environment]::SetEnvironmentVariable(
-    'PATH',
-    $newUserPath,
-    'User'
-  )
-  Write-Host "`tWPILib has been removed from the User Path" -ForegroundColor Green
-} else {
-  Write-Host "`tWPILib was not in the User Path and so was not removed" -ForegroundColor Yellow
 }
 
 Write-Host "`nFinished uninstalling WPILib!" -ForegroundColor Green
