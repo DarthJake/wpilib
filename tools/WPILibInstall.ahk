@@ -44,10 +44,10 @@ if(A_Args[3] = "true") {
 ;;;;; Operations ;;;;;
 WinWait, %InstallerTitle%
 WinActivate, %InstallerTitle%
-Sleep, 2000
+Sleep, 3000
 
 MouseClick, Left, 594, 360, 1, 0 ; Click Start
-Sleep, 1000
+Sleep, 3000
 
 ; Selecting the options to either download or choose existing
 if (usePreDownloadedZip = "cached") {
