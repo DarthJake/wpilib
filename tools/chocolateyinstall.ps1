@@ -23,17 +23,17 @@ $packageArgs = @{
   checksumType64 = 'sha256'
   silentArgs     = '' #none
 }
-if (Get-ProcessorBits -compare '64') {
-  $packageArgs += @{
-    Url      = $url64
-    file     = $fileName64
-    checksum = $isoChecksum64
-  }
-} elseif (Get-ProcessorBits -compare '32') {
+if (Get-ProcessorBits -compare '32') {
   $packageArgs += @{
     Url      = $url32
     file     = $fileName32
     checksum = $isoChecksum32
+  }
+} elseif (Get-ProcessorBits -compare '64') {
+  $packageArgs += @{
+    Url      = $url64
+    file     = $fileName64
+    checksum = $isoChecksum64
   }
 }
 
