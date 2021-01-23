@@ -4,7 +4,7 @@
   <metadata>
     <id>wpilib</id>
     <title>WPILib</title>
-    <version>2021.1.1-beta4</version>
+    <version>2021.1.2.20210123</version>
     <packageSourceUrl>https://github.com/DarthJake/wpilib</packageSourceUrl>
     <authors>WPI, PeterJohnson, Et Al.</authors>
     <owners>DarthJake</owners>

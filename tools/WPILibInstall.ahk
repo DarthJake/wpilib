@@ -47,7 +47,7 @@ WinActivate, %InstallerTitle%
 Sleep, 3000
 
 MouseClick, Left, 594, 360, 1, 0 ; Click Start
-Sleep, 3000
+Sleep, 5000 
 
 ; Selecting the options to either download or choose existing
 if (usePreDownloadedZip = "cached") {
