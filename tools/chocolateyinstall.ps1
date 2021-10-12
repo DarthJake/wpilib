@@ -2,12 +2,12 @@
 
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$url32         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2021.1.2/WPILib_Windows32-2021.1.2.iso'
-$url64         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2021.1.2/WPILib_Windows64-2021.1.2.iso'
+$url32         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2021.2.1/WPILib_Windows32-2021.2.1.iso'
+$url64         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2021.2.1/WPILib_Windows64-2021.2.1.iso'
 $fileName32    = 'WPILibInstaller.exe'
 $fileName64    = 'WPILibInstaller.exe'
-$isoChecksum32 = 'd367e7e4ca0c5cbf3bb5764ccb70c8a62cb64e7692b9af98c752a7f62b609020'
-$isoChecksum64 = '2a72f16dc2ee098b1871d2ec8ef2ef9baa70f08bf606cada1690c92dae8fe585'
+$isoChecksum32 = '8a0fcfae9f3eed70b33ab9a56f60a1c7c03e5cf78763256a4c7675a5d20fbc89'
+$isoChecksum64 = '388d25a0b0cc312546df1c00f51b87c1552ed87eb7367cd2ed058faf6170c0af'
 
 $pp = Get-PackageParameters
 $ahkParameters = ""
