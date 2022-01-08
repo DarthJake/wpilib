@@ -26,7 +26,6 @@ if(A_Args[1] != "" and A_Args[1] = "cpp" or A_Args[1] = "java" or A_Args[1] = "b
     installModeOption := A_Args[1]
     StringLower, installModeOption, installModeOption
 }
-
 ; Parameter for whether to download zip or use given or default local zip
 if(A_Args[2] = "true") {
     usePreDownloadedZip := "cached"
@@ -46,8 +45,17 @@ WinWait, %InstallerTitle%
 WinActivate, %InstallerTitle%
 Sleep, 3000
 
-MouseClick, Left, 594, 360, 1, 0 ; Click Start
-Sleep, 5000 
+; Find and click the start button on the right side of the screen
+WinGetPos, X, Y, Width, Height, %InstallerTitle%
+PixelSearch, X, Y, (Width/2), 0, Width, Height, 0xf5f5f5, 0, Fast
+MouseClick, Left, X, Y, 1, 0 ; Click Start
+Sleep, 2500 
+
+; Find and click install for all users on the right side of the screen
+WinGetPos, X, Y, Width, Height, %InstallerTitle%
+PixelSearch, X, Y, (Width/2), 0, Width, Height, 0xf5f5f5, 0, Fast
+MouseClick, Left, X, Y, 1, 0
+Sleep, 2500 
 
 ; Selecting the options to either download or choose existing
 if (usePreDownloadedZip = "cached") {
@@ -62,15 +70,26 @@ if (usePreDownloadedZip = "cached") {
 
     MouseClick, Left, 594, 360, 1, 0 ; Click Next
 } else {
+    ; Search left side of screen for Download button and click
+    WinGetPos, X, Y, Width, Height, %InstallerTitle%
+    PixelSearch, X, Y, 0, 0, (Width/2), (Height/2), 0xf5f5f5, 0, Fast
+    MouseClick, Left, X, Y, 1, 0
+    Sleep, 2500 
+
     MouseClick, Left, 127, 254, 1, 0 ; Click Download
     Sleep, 2000
-    While(ButtonPixelColor != ActualButtonColor) { ; Wait for Download to finish and for 'next' button to push 'back' button to the left
-        PixelGetColor, ButtonPixelColor, 538, 350
+    WinGetPos, X, Y, Width, Height, %InstallerTitle%
+    PixelSearch, X, Y, Width, Height, (Width/2), (Height/2), 0xf5f5f5, 0, Fast
+    While(ErrorLevel = 1) { ; Wait for Download to finish
+        WinGetPos, X, Y, Width, Height, %InstallerTitle%
+        PixelSearch, X, Y, Width, Height, (Width/2), (Height/2), 0xf5f5f5, 0, Fast
         Sleep, 500
     }
-    MouseClick, Left, 594, 360, 1, 0 ; Click Next
+    MouseClick, Left, X, Y, 1, 0
+    MsgBox, Found
 }
 Sleep, 2000
+Exit
 
 ; Select desired C++ or Java options
 ; MsgBox % "Selecting Language Options: " . installModeOption
@@ -99,4 +118,14 @@ if !(ErrorLevel) {
     }
 } else {
    MsgBox % "AHK ERROR!!" 
+}
+
+FindAndClick(X1, Y1, X2, Y2) {
+    PixelSearch, X, Y, (Width/2), 0, Width, Height, 0xf5f5f5, 0, Fast
+    MouseClick, Left, X, Y, 1, 0 ; Click Start
+    While(ErrorLevel = 1) { ; Wait for Download to finish
+        WinGetPos, X, Y, Width, Height, %InstallerTitle%
+        PixelSearch, X, Y, Width, Height, (Width/2), (Height/2), 0xf5f5f5, 0, Fast
+        Sleep, 500
+    }
 }
