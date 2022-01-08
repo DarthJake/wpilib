@@ -4,7 +4,7 @@
   <metadata>
     <id>wpilib</id>
     <title>WPILib</title>
-    <version>2021.3.1</version>
+    <version>2022.1.1</version>
     <packageSourceUrl>https://github.com/DarthJake/wpilib</packageSourceUrl>
     <authors>WPI, PeterJohnson, Et Al.</authors>
     <owners>DarthJake</owners>
@@ -24,7 +24,7 @@ To have choco remember parameters on upgrade, be sure to set `choco feature enab
 </description>
     <projectUrl>https://github.com/wpilibsuite/allwpilib/releases</projectUrl>
     <tags>wpilib frc first robotics admin</tags>
-    <copyright>Copyright (c) 2009-2021 FIRST.</copyright>
+    <copyright>Copyright (c) 2009-2022 FIRST.</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.jsdelivr.net/gh/DarthJake/wpilib@master/logo.png</iconUrl>
     <dependencies>
