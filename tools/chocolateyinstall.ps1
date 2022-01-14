@@ -11,8 +11,8 @@ $isoChecksum64 = 'cf31ebefab0f999aef27cf59ccaa67cb34ea6eb9b7b2f64dc92e739ee99c30
 
 $pp = Get-PackageParameters
 $ahkParameters = ""
-$ahkParameters += if ($pp.ProgrammingLanguage) { "`"$($pp.ProgrammingLanguage)`"" }
-$ahkParameters += if ($pp.CachedZip) { " $($pp.CachedZip)" }
+$ahkParameters += if ($pp.InstallScope) { "`"$($pp.InstallScope)`"" }
+$ahkParameters += if ($pp.VSCodeZipPath) { " $($pp.VSCodeZipPath)" }
 $ahkParameters += if ($pp.AllowUserInteraction) { " $($pp.AllowUserInteraction)" }
 
 $packageArgs = @{
@@ -35,6 +35,10 @@ if (Get-ProcessorBits -compare '32') {
     file     = $fileName64
     checksum = $isoChecksum64
   }
+}
+
+if (!(Get-OSArchitectureWidth -Compare 64) -or !($env:OS_NAME -eq "Windows 10" -or $env:OS_NAME -eq "Windows 11")) {
+  throw "WPILib requires Windows 10 64-bit version or newer. Aborting installation."
 }
 
 $ahkExe = "AutoHotKey" # This is a reference to the global AHK exe
