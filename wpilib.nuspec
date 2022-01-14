@@ -4,7 +4,7 @@
   <metadata>
     <id>wpilib</id>
     <title>WPILib</title>
-    <version>2021.2.1</version>
+    <version>2022.1.1</version>
     <packageSourceUrl>https://github.com/DarthJake/wpilib</packageSourceUrl>
     <authors>WPI, PeterJohnson, Et Al.</authors>
     <owners>DarthJake</owners>
@@ -13,18 +13,18 @@
 
 ## Package Parameters
 
-- `/ProgrammingLanguage:Language` - Selects the language specific software to install. Default is 'both'. ('java'/'cpp'/'both')
-- `/CachedZip:Zip` - Selects whether to use a cached zip with the installer or to download it. Default is 'false'. ('true'/'false'/path_to_zip)
->*NOTE: If 'true', it will be assumed the zip is next to the installer with the default name.*
-- `/AllowUserInteraction:boolean` - Let the user intereact with the installer before execution. Default is 'false'. ('true'/'false')
->*NOTE: This is really only for debugging or for custom control over install options.*
+- `/InstallScope:Scope` - Whether to install for all users or current user. Default is `allUsers`. (`allUsers`/`currentUser`)
+- `/VSCodeZipPath:Path` - Whether to use an existing zip or to download it. Default is `download`. (`download`/`PATH_TO_ZIP`)
+>*NOTE: The path should not have any "quotation marks" around it.*
+- `/AllowUserInteraction:boolean` - Lets the user intereact with the installer before execution. Default is `false`. (`true`/`false`)
+>*NOTE: AllowUserInteraction is really only for debugging or for custom control over install options.*
 
 To pass parameters, use `--params "''"` (e.g. `choco install packageID [other options] --params="'/ITEM:value /ITEM2:value2 /FLAG_BOOLEAN'"`).
 To have choco remember parameters on upgrade, be sure to set `choco feature enable -n=useRememberedArgumentsForUpgrades`.
 </description>
     <projectUrl>https://github.com/wpilibsuite/allwpilib/releases</projectUrl>
     <tags>wpilib frc first robotics admin</tags>
-    <copyright>Copyright (c) 2009-2021 FIRST.</copyright>
+    <copyright>Copyright (c) 2009-2022 FIRST.</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.jsdelivr.net/gh/DarthJake/wpilib@master/logo.png</iconUrl>
     <dependencies>

@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'; # stop on all errors
 Write-Host "Beginning uninstall process of WPILib..."
 
 # Variables that will need changed
-$year = '2021'
+$year = '2022'
 
 # Generated/Constant Variables
 $systemDriveLetter = (Get-WmiObject Win32_OperatingSystem).getPropertyValue("SystemDrive")

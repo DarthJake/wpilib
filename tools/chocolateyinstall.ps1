@@ -2,17 +2,17 @@
 
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$url32         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2021.2.1/WPILib_Windows32-2021.2.1.iso'
-$url64         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2021.2.1/WPILib_Windows64-2021.2.1.iso'
+$url32         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2022.1.1/WPILib_Windows32-2022.1.1.iso'
+$url64         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2022.1.1/WPILib_Windows64-2022.1.1.iso'
 $fileName32    = 'WPILibInstaller.exe'
 $fileName64    = 'WPILibInstaller.exe'
-$isoChecksum32 = '8a0fcfae9f3eed70b33ab9a56f60a1c7c03e5cf78763256a4c7675a5d20fbc89'
-$isoChecksum64 = '388d25a0b0cc312546df1c00f51b87c1552ed87eb7367cd2ed058faf6170c0af'
+$isoChecksum32 = '18ed99d77d649886edd62a0bfb8d117c37ea3252625d4b0886a616832865cc05'
+$isoChecksum64 = 'cf31ebefab0f999aef27cf59ccaa67cb34ea6eb9b7b2f64dc92e739ee99c303e'
 
 $pp = Get-PackageParameters
 $ahkParameters = ""
-$ahkParameters += if ($pp.ProgrammingLanguage) { "`"$($pp.ProgrammingLanguage)`"" }
-$ahkParameters += if ($pp.CachedZip) { " $($pp.CachedZip)" }
+$ahkParameters += if ($pp.InstallScope) { "`"$($pp.InstallScope)`"" }
+$ahkParameters += if ($pp.VSCodeZipPath) { " $($pp.VSCodeZipPath)" }
 $ahkParameters += if ($pp.AllowUserInteraction) { " $($pp.AllowUserInteraction)" }
 
 $packageArgs = @{
@@ -35,6 +35,10 @@ if (Get-ProcessorBits -compare '32') {
     file     = $fileName64
     checksum = $isoChecksum64
   }
+}
+
+if (!(Get-OSArchitectureWidth -Compare 64) -or !($env:OS_NAME -eq "Windows 10" -or $env:OS_NAME -eq "Windows 11")) {
+  throw "WPILib requires Windows 10 64-bit version or newer. Aborting installation."
 }
 
 $ahkExe = "AutoHotKey" # This is a reference to the global AHK exe
