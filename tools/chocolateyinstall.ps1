@@ -2,8 +2,8 @@
 
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$url32         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2022.1.1/WPILib_Windows32-2022.1.1.iso'
-$url64         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2022.1.1/WPILib_Windows64-2022.1.1.iso'
+$url32         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2022.2.1/WPILib_Windows32-2022.2.1.iso'
+$url64         = 'https://github.com/wpilibsuite/allwpilib/releases/download/v2022.2.1/WPILib_Windows64-2022.2.1.iso'
 $fileName32    = 'WPILibInstaller.exe'
 $fileName64    = 'WPILibInstaller.exe'
 $isoChecksum32 = '18ed99d77d649886edd62a0bfb8d117c37ea3252625d4b0886a616832865cc05'
