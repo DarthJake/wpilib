@@ -84,7 +84,7 @@ if !(ErrorLevel) {
 
         ; Click Finish
         WinGetPos, X, Y, Width, Height, %INSTALLER_TITLE%
-        FindAndClick(Width, Height, Width/2, Height*.90, BUTTON_COLOR)
+        FindAndClick(Width, Height, Width/2, Height*0.9, BUTTON_COLOR)
     } else {
         MsgBox % "Ending to allow user interaction."
     }
@@ -102,7 +102,7 @@ FindAndClick(X1, Y1, X2, Y2, color) {
         ; WinGetPos, X, Y, Width, Height, %INSTALLER_TITLE%
         WinActivate, %INSTALLER_TITLE%
         PixelSearch, Xout, Yout, X1, Y1, X2, Y2, color, 0, Fast
-        Sleep, 500
+        Sleep, 1000
     }
     MouseClick, Left, Xout, Yout, 1, 0
     ; MouseMove, Xout, Yout ; For testing
