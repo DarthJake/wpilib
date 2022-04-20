@@ -79,12 +79,12 @@ if !(ErrorLevel) {
     if (allowUserInteraction == "false") {
         ; Click next which will start instalation
         WinGetPos, X, Y, Width, Height, %INSTALLER_TITLE%
-        FindAndClick(Width, Height, Width/2, Height/2, BUTTON_COLOR)
-        Sleep, 1500
+        FindAndClick(Width, Height, Width/2, Height*0.9, BUTTON_COLOR)
+        Sleep, 5000
 
         ; Click Finish
         WinGetPos, X, Y, Width, Height, %INSTALLER_TITLE%
-        FindAndClick(Width, Height, Width/2, Height*.85, BUTTON_COLOR)
+        FindAndClick(Width, Height, Width/2, Height*0.9, BUTTON_COLOR)
     } else {
         MsgBox % "Ending to allow user interaction."
     }
@@ -102,9 +102,10 @@ FindAndClick(X1, Y1, X2, Y2, color) {
         ; WinGetPos, X, Y, Width, Height, %INSTALLER_TITLE%
         WinActivate, %INSTALLER_TITLE%
         PixelSearch, Xout, Yout, X1, Y1, X2, Y2, color, 0, Fast
-        Sleep, 500
+        Sleep, 1000
     }
     MouseClick, Left, Xout, Yout, 1, 0
+    ; MouseMove, Xout, Yout ; For testing
 }
 
 ; Function for debugging PixelSearch parameters
